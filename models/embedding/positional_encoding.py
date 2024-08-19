@@ -9,34 +9,34 @@ from torch import nn
 
 class PositionalEncoding(nn.Module):
     """
-    compute sinusoid encoding.
+    计算正弦编码。
     """
 
     def __init__(self, d_model, max_len, device):
         """
-        constructor of sinusoid encoding class
+        正弦编码类的构造函数
 
-        :param d_model: dimension of model
-        :param max_len: max sequence length
-        :param device: hardware device setting
+        :param d_model: 模型的维度
+        :param max_len: 最大序列长度
+        :param device: 硬件设备设置
         """
         super(PositionalEncoding, self).__init__()
 
-        # same size with input matrix (for adding with input matrix)
+        # 与输入矩阵大小相同（用于与输入矩阵相加）
         self.encoding = torch.zeros(max_len, d_model, device=device)
-        self.encoding.requires_grad = False  # we don't need to compute gradient
+        self.encoding.requires_grad = False  # 我们不需要计算梯度
 
         pos = torch.arange(0, max_len, device=device)
         pos = pos.float().unsqueeze(dim=1)
-        # 1D => 2D unsqueeze to represent word's position
+        # 1D => 2D unsqueeze 表示单词的位置
 
         _2i = torch.arange(0, d_model, step=2, device=device).float()
-        # 'i' means index of d_model (e.g. embedding size = 50, 'i' = [0,50])
-        # "step=2" means 'i' multiplied with two (same with 2 * i)
+        # 'i' 表示 d_model 的索引（例如，嵌入大小 = 50，'i' = [0,50]）
+        # "step=2" 表示 'i' 乘以 2（与 2 * i 相同）
 
         self.encoding[:, 0::2] = torch.sin(pos / (10000 ** (_2i / d_model)))
         self.encoding[:, 1::2] = torch.cos(pos / (10000 ** (_2i / d_model)))
-        # compute positional encoding to consider positional information of words
+        # 计算位置编码以考虑单词的位置信息
 
     def forward(self, x):
         # self.encoding
@@ -47,4 +47,4 @@ class PositionalEncoding(nn.Module):
 
         return self.encoding[:seq_len, :]
         # [seq_len = 30, d_model = 512]
-        # it will add with tok_emb : [128, 30, 512]
+        # 它将与 tok_emb 相加：[128, 30, 512]
