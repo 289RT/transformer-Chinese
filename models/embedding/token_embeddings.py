@@ -8,15 +8,15 @@ from torch import nn
 
 class TokenEmbedding(nn.Embedding):
     """
-    Token Embedding using torch.nn
-    they will dense representation of word using weighted matrix
+    使用 torch.nn 进行词元嵌入
+    它们将使用加权矩阵对单词进行密集表示
     """
 
     def __init__(self, vocab_size, d_model):
         """
-        class for token embedding that included positional information
+        包含位置信息的词元嵌入类
 
-        :param vocab_size: size of vocabulary
-        :param d_model: dimensions of model
+        :param vocab_size: 词汇表大小
+        :param d_model: 模型维度
         """
         super(TokenEmbedding, self).__init__(vocab_size, d_model, padding_idx=1)
