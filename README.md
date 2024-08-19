@@ -1,5 +1,6 @@
 # 我做了什么？
-将Attention Is All You Need文章翻译为中文
+将Attention Is All You Need文章翻译为中文  
+
 在原作者的代码基础上，使用Gemini用中文注释了模型的每行代码，便于理解
 ### WARNING
 This code was written in 2019, and I was not very familiar with transformer model in that time.
